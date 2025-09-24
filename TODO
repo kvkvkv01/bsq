@@ -1,0 +1,370 @@
+# BSQ - C-Piscine's Final Project
+
+**Summary:** Will you find the biggest square?  
+**Version:** 8.3
+
+## Chapter I - Foreword
+
+Contains quotes from "Life, The Universe, and Everything" by Douglas Adams, relating to the game of cricket and its galactic significance in the Hitchhiker's Guide universe.
+
+## Chapter II - Instructions
+
+- Work must comply with the Norm (coding standard)
+- Handle errors coherently according to subject instructions
+- Project must be completed and pushed to Git repository by deadline
+- Program must compile using `cc` with flags: `-Wall -Wextra -Werror`
+- If program doesn't compile, score will be 0
+- Each team member must understand all project details
+- **This project will be checked and graded by Moulinette** (automated evaluation system)
+
+## Chapter III - Subject
+
+### Program Specifications
+- **Program name:** bsq
+- **Turn in files:** Makefile and all necessary files
+- **Makefile:** Yes (required)
+- **Arguments:** File(s) containing the map data
+- **External functions:** open, close, read, write, malloc, free, exit
+- **Libft authorized:** Not applicable
+- **Description:** Write a program that computes and prints the biggest possible square in the given area
+
+### The Biggest Square Problem
+
+**Objective:** Find the biggest square on a map while avoiding obstacles.
+
+**File Format:**
+- First line contains map information:
+  - Number of lines on the map (any valid int)
+  - "Empty" character (cannot be a number)
+  - "Obstacle" character
+  - "Full" character
+- Map consists of lines with "empty" and "obstacle" characters
+- Program replaces "empty" characters with "full" characters to represent the biggest square
+
+**Rules:**
+- If multiple solutions exist, choose the square closest to the top of the map, then most to the left
+- Program must handle 1 to n files as parameters
+- When processing multiple files, separate solutions with empty lines
+- If no arguments passed, read from standard input
+- Must have a valid Makefile that doesn't relink
+
+### Valid File Definition
+- First line: valid positive number + three different printable characters
+- All map lines must have same length
+- At least one line with at least one box
+- Lines separated by newline characters
+- Map characters can only be those from the first line
+
+### Error Handling
+- Invalid file/map: display "map error" on standard output + newline
+- Continue to next file if available
+
+### Example
+```
+Input file:
+9.ox
+...........................
+....o......................
+............o..............
+...........................
+....o......................
+...............o...........
+...........................
+......o..............o.....
+..o.......o................
+
+Output:
+.....xxxxxxx...............
+....oxxxxxxx...............
+.....xxxxxxxo..............
+.....xxxxxxx...............
+....oxxxxxxx...............
+.....xxxxxxx...o...........
+.....xxxxxxx...............
+......o..............o.....
+..o.......o................
+```
+
+**Note:** It is a square indeed, even though it might not look like that visually.
+
+## Chapter IV - Appendix
+
+### Perl Map Generator
+```perl
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+die "Usage: program x y density" unless (scalar(@ARGV) == 3);
+
+my ($x, $y, $density) = @ARGV;
+
+print "$y.ox\n";
+for (my $i = 0; $i < $y; $i++) {
+    for (my $j = 0; $j < $x; $j++) {
+        if (int(rand($y) * 2) < $density) {
+            print "o";
+        }
+        else {
+            print ".";
+        }
+    }
+    print "\n";
+}
+```
+
+**Testing:** Test your program with many maps of different sizes. Keep various maps available for evaluation.
+
+## Chapter V - Submission and Peer-evaluation
+
+- Submit assignment to Git repository as usual
+- Only work inside repository will be evaluated
+- Double-check file names for correctness
+- **Submit only files requested by the subject**
+- **This project will be checked and graded by Moulinette** - automated, meticulous, and strict evaluation system with no negotiation possible
+
+# The Norm - Version 4.1
+
+**42 School Programming Standard**
+
+This document describes the applicable standard (Norm) at 42: a programming standard that defines a set of rules to follow when writing code. The Norm applies to all C projects within the Common Core by default, and to any project where it's specified.
+
+## Chapter I - Foreword
+
+The **norminette** is a Python and open source code that checks Norm compliance of your source code. It checks many constraints of the Norm, but not all of them (subjective constraints). Unless specific local regulations on your campus, the norminette prevails during evaluations on the controlled items. Rules not checked by norminette are marked with (*) and can lead to project failure if discovered by the evaluator during code review.
+
+Repository: https://github.com/42School/norminette
+
+## Chapter II - Why?
+
+The Norm has been carefully crafted to fulfill many pedagogical needs:
+
+### Sequencing
+- Coding implies splitting complex tasks into elementary instructions executed in sequence
+- Beginners need simple and clear architecture with full understanding of individual instructions
+- Cryptic syntaxes doing multiple instructions simultaneously are confusing
+- Functions addressing multiple tasks mixed in same code portion cause errors
+- **25 lines maximum per function**
+- **for, do..while, and ternaries are forbidden**
+
+### Look and Feel
+- Provides consistent appearance for peer learning and evaluations
+- Specific naming conventions for functions and variables
+- Standard indentation, brace rules, tab and spaces
+- Allows smooth code reading without decryption time
+- Serves as a trademark for 42 community recognition
+
+### Long-term Vision
+- Writing understandable code is the best way to maintain it
+- Prevents situations where code stops being maintained due to complexity
+- Essential for successful products in the market
+
+### References
+- Rules are based on research and established best practices
+- Encourages researching why functions should be short, variable names meaningful, lines under 80 columns, etc.
+
+## Chapter III - The Norm
+
+### III.1 Naming
+
+**Prefixes:**
+- Structure names: `s_` (e.g., `s_struct`)
+- Typedef names: `t_` (e.g., `t_struct`)
+- Union names: `u_` (e.g., `u_union`)
+- Enum names: `e_` (e.g., `e_enum`)
+- Global names: `g_` (e.g., `g_global`)
+
+**General Rules:**
+- Identifiers (variables, functions, types) can only contain lowercase, digits, and '_' (snake_case)
+- No capital letters allowed
+- Files and directories: lowercase, digits, '_' only
+- Characters outside standard ASCII table forbidden (except in literal strings/chars)
+- (*) All names should be explicit, readable in English, words separated by underscores
+- Global variables must be marked `const` or `static` (unless project explicitly allows)
+- File must compile to pass Norm
+
+### III.2 Formatting
+
+**Function and Line Limits:**
+- Functions: maximum 25 lines (not counting function's own braces)
+- Lines: maximum 80 columns (comments included)
+- Tabulation counts as spaces it represents, not single column
+
+**Indentation and Spacing:**
+- Indent with 4-character tabulations (ASCII char 9, not spaces)
+- Blocks within braces must be indented
+- Braces alone on their line (except struct/enum/union declarations)
+- Empty lines must be completely empty (no spaces/tabs)
+- Lines cannot end with spaces/tabs
+- No two consecutive empty lines or consecutive spaces
+
+**Variable Declarations:**
+- Must be at beginning of function
+- All variable names indented on same column in their scope
+- Asterisks for pointers stuck to variable names
+- One variable declaration per line
+- Declaration and initialization cannot be on same line (except globals, statics, constants)
+- Empty line required between variable declarations and remaining function code
+
+**Instructions and Control:**
+- One instruction or control structure per line
+- Assignment in control structure forbidden
+- Multiple assignments on same line forbidden
+- Newline needed at end of control structure
+- Instructions can be split across lines with proper indentation
+- Operators at beginning of new line, not end of previous
+- Comma/semicolon followed by space (unless end of line)
+- Operators separated by exactly one space
+- C keywords followed by space (except type keywords like int, char, float, sizeof)
+- Control structures must use braces unless single instruction on single line
+
+### III.3 Functions
+
+- Maximum 4 named parameters
+- Functions with no arguments must use `void` explicitly
+- Parameters in prototypes must be named
+- Maximum 5 variables per function
+- Return values must be in parentheses (unless returning nothing)
+- Single tabulation between return type and function name
+
+**Example:**
+```c
+int my_func(int arg1, char arg2, char *arg3)
+{
+    return (my_val);
+}
+
+int func2(void)
+{
+    return ;
+}
+```
+
+### III.4 Typedef, struct, enum and union
+
+- Space between keyword and name when declaring
+- Regular indentation rules apply inside braces
+- Space after "typedef" with regular indentation for new name
+- Indent all structure names on same column for their scope
+- Cannot declare structure in .c file
+
+### III.5 Headers (Include Files)
+
+**Allowed Elements:** (*) header inclusions, declarations, defines, prototypes, macros
+- All includes at beginning of file
+- Cannot include .c file in header or another .c file
+- Must protect from double inclusions (e.g., `FT_FOO_H` for `ft_foo.h`)
+- (*) Unused headers forbidden
+- Header inclusion can be justified using comments
+
+**Example:**
+```c
+#ifndef FT_HEADER_H
+# define FT_HEADER_H
+# include <stdlib.h>
+# include <stdio.h>
+# define FOO "bar"
+
+int g_variable;
+struct s_struct;
+
+#endif
+```
+
+### III.6 The 42 Header
+
+- Every .c and .h file must begin with standard 42 header
+- Multi-line comment with special format including useful information
+- Available in cluster text editors (emacs: C-c C-h, vim: :Stdheader or F1)
+- (*) Must contain up-to-date information: creator login, student email, creation date, last update info
+- Should automatically update when file is saved
+
+### III.7 Macros and Pre-processors
+
+- (*) #define only for literal and constant values
+- (*) #define to bypass norm or obfuscate code forbidden
+- (*) Standard library macros only if allowed in project scope
+- Multiline macros forbidden
+- Macro names must be UPPERCASE
+- Indent preprocessor directives inside #if/#ifdef/#ifndef blocks
+- Preprocessor instructions forbidden outside global scope
+
+### III.8 Forbidden Stuff!
+
+**Prohibited Constructs:**
+- `for` loops
+- `do...while` loops
+- `switch` statements
+- `case` statements
+- `goto` statements
+- Ternary operators (`?`)
+- VLAs (Variable Length Arrays)
+- Implicit type in variable declarations
+
+**Example of violations:**
+```c
+int main(int argc, char **argv)
+{
+    int i;
+    char str[argc]; // This is a VLA - FORBIDDEN
+    i = argc > 5 ? 0 : 1; // Ternary - FORBIDDEN
+}
+```
+
+### III.9 Comments
+
+- Cannot be inside function bodies
+- Must be at end of line or on their own line
+- (*) Comments should be in English and useful
+- (*) Comments cannot justify creation of carryall or bad functions
+
+**Note on Bad Functions:**
+Carryall or bad functions usually have non-explicit names like f1, f2 for functions and a, b, c for variables. Functions created solely to avoid the norm without unique logical purpose are considered bad functions. Aim for clear, readable functions achieving simple tasks each.
+
+### III.10 Files
+
+- Cannot include .c file in .c file
+- Maximum 5 function definitions per .c file
+
+### III.11 Makefile
+
+Makefiles aren't checked by norminette but must be verified during evaluation:
+
+**Mandatory Rules:**
+- `$(NAME)`, `clean`, `fclean`, `re`, and `all`
+- `all` rule must be default (executed with just `make`)
+- Must not relink when unnecessary (considered non-functional)
+
+**Special Cases:**
+- Multibinary projects: rule for each binary ($(NAME_1), $(NAME_2), etc.)
+- "all" rule compiles all binaries using each binary rule
+- Projects using non-system libraries: Makefile must compile library automatically
+- All source files must be explicitly named (no "*.c" or "*.o")
+
+## General Code Example
+
+```c
+int g_global;
+
+typedef struct s_struct
+{
+    char    *my_string;
+    int     i;
+}           t_struct;
+
+struct s_other_struct;
+
+int main(void)
+{
+    int     i;
+    char    c;
+
+    return (i);
+}
+```
+
+---
+
+*This standard ensures code readability, maintainability, and consistency across all 42 School projects.*
+
+
